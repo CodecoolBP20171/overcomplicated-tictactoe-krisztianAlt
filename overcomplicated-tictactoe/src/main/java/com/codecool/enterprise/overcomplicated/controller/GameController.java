@@ -36,15 +36,20 @@ public class GameController {
     }
 
     @GetMapping(value = "/game")
-    public String gameView(@ModelAttribute("player") Player player, Model model) {
+    public String gameView(@ModelAttribute("player") Player player,
+                           Model model) {
         model.addAttribute("funfact", "&quot;Chuck Norris knows the last digit of pi.&quot;");
         model.addAttribute("comic_uri", "https://imgs.xkcd.com/comics/bad_code.png");
         return "game";
     }
 
     @GetMapping(value = "/game-move")
-    public String gameMove(@ModelAttribute("player") Player player, @ModelAttribute("move") int move) {
+    public String gameMove(@ModelAttribute("player") Player player,
+                           @ModelAttribute("move") int move,
+                           @ModelAttribute("game") TictactoeGame tictactoeGame) {
         System.out.println("Player moved " + move);
+        tictactoeGame.setAGameField(move, "O");
+        System.out.println("Game state: " + tictactoeGame.getGameFields());
         return "redirect:/game";
     }
 }

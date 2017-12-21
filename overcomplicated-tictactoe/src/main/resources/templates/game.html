@@ -48,35 +48,71 @@
                 <div class="container-fluid game-container">
                     <div class="row">
                         <div class="col-xs-4">
-                            <a href="/game-move?move=0" class="btn btn-default square">&nbsp;</a>
+                            <a href="/game-move?move=0" class="btn btn-default square" th:switch="${#strings.substring(game.gameFields, 0, 1)}">
+                                <i th:case="'O'" th:class="'fa fa-circle-o'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="'X'" th:class="'fa fa-times'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="*" th:text="'&nbsp;'"></i>
+                            </a>
                         </div>
                         <div class="col-xs-4">
-                            <a href="/game-move?move=1" class="btn btn-default square"><i class="fa fa-circle-o" aria-hidden="true"></i></a>
+                            <a href="/game-move?move=1" class="btn btn-default square" th:switch="${#strings.substring(game.gameFields, 1, 2)}">
+                                <i th:case="'O'" th:class="'fa fa-circle-o'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="'X'" th:class="'fa fa-times'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="*" th:text="'&nbsp;'"></i>
+                            </a>
                         </div>
                         <div class="col-xs-4">
-                            <a href="/game-move?move=2" class="btn btn-default square"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            <a href="/game-move?move=2" class="btn btn-default square" th:switch="${#strings.substring(game.gameFields, 2, 3)}">
+                                <i th:case="'O'" th:class="'fa fa-circle-o'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="'X'" th:class="'fa fa-times'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="*" th:text="'&nbsp;'"></i>
+                            </a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
-                            <a href="/game-move?move=3" class="btn btn-default square">&nbsp;</a>
+                            <a href="/game-move?move=3" class="btn btn-default square" th:switch="${#strings.substring(game.gameFields, 3, 4)}">
+                                <i th:case="'O'" th:class="'fa fa-circle-o'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="'X'" th:class="'fa fa-times'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="*" th:text="'&nbsp;'"></i>
+                            </a>
                         </div>
                         <div class="col-xs-4">
-                            <a href="/game-move?move=4" class="btn btn-default square">&nbsp;</a>
+                            <a href="/game-move?move=4" class="btn btn-default square" th:switch="${#strings.substring(game.gameFields, 4, 5)}">
+                                <i th:case="'O'" th:class="'fa fa-circle-o'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="'X'" th:class="'fa fa-times'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="*" th:text="'&nbsp;'"></i>
+                            </a>
                         </div>
                         <div class="col-xs-4">
-                            <a href="/game-move?move=5" class="btn btn-default square">&nbsp;</a>
+                            <a href="/game-move?move=5" class="btn btn-default square" th:switch="${#strings.substring(game.gameFields, 5, 6)}">
+                                <i th:case="'O'" th:class="'fa fa-circle-o'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="'X'" th:class="'fa fa-times'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="*" th:text="'&nbsp;'"></i>
+                            </a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-4">
-                            <a href="/game-move?move=6" class="btn btn-default square">&nbsp;</a>
+                            <a href="/game-move?move=6" class="btn btn-default square" th:switch="${#strings.substring(game.gameFields, 6, 7)}">
+                                <i th:case="'O'" th:class="'fa fa-circle-o'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="'X'" th:class="'fa fa-times'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="*" th:text="'&nbsp;'"></i>
+                            </a>
                         </div>
                         <div class="col-xs-4">
-                            <a href="/game-move?move=7" class="btn btn-default square">&nbsp;</a>
+                            <a href="/game-move?move=7" class="btn btn-default square" th:switch="${#strings.substring(game.gameFields, 7, 8)}">
+                                <i th:case="'O'" th:class="'fa fa-circle-o'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="'X'" th:class="'fa fa-times'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="*" th:text="'&nbsp;'"></i>
+                            </a>
                         </div>
                         <div class="col-xs-4">
-                            <a href="/game-move?move=8" class="btn btn-default square">&nbsp;</a>
+                            <a href="/game-move?move=8" class="btn btn-default square" th:switch="${#strings.substring(game.gameFields, 8, 9)}">
+                                <i th:case="'O'" th:class="'fa fa-circle-o'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="'X'" th:class="'fa fa-times'" th:attr="aria-hidden='true'"></i>
+                                <i th:case="*" th:text="'&nbsp;'"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
