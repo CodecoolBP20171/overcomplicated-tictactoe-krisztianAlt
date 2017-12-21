@@ -2,13 +2,19 @@ package com.codecool.enterprise.overcomplicated.controller;
 
 import com.codecool.enterprise.overcomplicated.model.Player;
 import com.codecool.enterprise.overcomplicated.model.TictactoeGame;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @Controller
 @SessionAttributes({"player", "game"})
 public class GameController {
+
+    @Autowired
+    protected RestTemplate restTemplate;
+
 
     @ModelAttribute("player")
     public Player getPlayer() {
@@ -50,6 +56,14 @@ public class GameController {
         System.out.println("Player moved " + move);
         tictactoeGame.setAGameField(move, "O");
         System.out.println("Game state: " + tictactoeGame.getGameFields());
+
+        System.out.println("BEFORE");
+        int computerStep = restTemplate.getForObject("http://localhost:60001" + "/{gameStatus}", int.class, tictactoeGame.getGameFields());
+        System.out.println("AFTER");
+        tictactoeGame.setAGameField(computerStep, "X");
+
         return "redirect:/game";
     }
+
+
 }
