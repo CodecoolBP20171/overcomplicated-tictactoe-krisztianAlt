@@ -43,6 +43,21 @@
             </div>
         </div>
 
+        <!--<div id="error-messages" class="alert alert-danger" th:if="${error != null}">
+            <p th:text="${error}"></p>
+        </div>-->
+
+
+        <div class="alert alert-danger alert-dismissable fade in" th:if="${error != null}">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p th:text="${error}"></p>
+        </div>
+
+        <div class="alert alert-success alert-dismissable fade in" th:if="${gameover != null}">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <p th:text="${gameover}"></p>
+        </div>
+
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-sm-offset-3">
                 <div class="container-fluid game-container">
