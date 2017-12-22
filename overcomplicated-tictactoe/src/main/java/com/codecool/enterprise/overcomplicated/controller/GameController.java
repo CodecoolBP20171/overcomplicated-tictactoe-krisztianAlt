@@ -55,13 +55,8 @@ public class GameController {
                            @ModelAttribute("game") TictactoeGame tictactoeGame) {
         System.out.println("Player moved " + move);
         tictactoeGame.setAGameField(move, "O");
-        System.out.println("Game state: " + tictactoeGame.getGameFields());
-
-        System.out.println("BEFORE");
         int computerStep = restTemplate.getForObject("http://localhost:60001" + "/{gameStatus}", int.class, tictactoeGame.getGameFields());
-        System.out.println("AFTER");
         tictactoeGame.setAGameField(computerStep, "X");
-
         return "redirect:/game";
     }
 
