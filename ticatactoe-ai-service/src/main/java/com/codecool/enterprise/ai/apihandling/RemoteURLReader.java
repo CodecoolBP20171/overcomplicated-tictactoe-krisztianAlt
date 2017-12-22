@@ -1,4 +1,4 @@
-package com.codecool.enterprise.ai.logic;
+package com.codecool.enterprise.ai.apihandling;
 
 import org.springframework.stereotype.Service;
 
