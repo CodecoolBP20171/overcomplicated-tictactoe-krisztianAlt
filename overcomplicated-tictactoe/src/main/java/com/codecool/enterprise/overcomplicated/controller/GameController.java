@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.net.ConnectException;
+
 @Controller
 @SessionAttributes({"player", "game"})
 public class GameController {
@@ -23,9 +25,17 @@ public class GameController {
     public Player getPlayer() {
         return new Player();
     }
-    
+
     @ModelAttribute("avatar_uri")
     public String getAvatarUri() {
+        try {
+            String uri = restTemplate.getForObject("http://localhost:60002/", String.class);
+            logger.info("URI from Avatar Service: " + uri);
+            return uri;
+        } catch (Exception e){
+            logger.error("AVATAR SERVICE IS NOT AVAILABLE: " + e.getMessage());
+        }
+
         return "https://robohash.org/codecool";
     }
 
@@ -47,13 +57,16 @@ public class GameController {
         redirectAttributes.addFlashAttribute("game", newGame);
 
         if (whoStart.equals("comp")){
-            int computerStep = restTemplate.getForObject("http://localhost:60001" + "/{gameStatus}", int.class, newGame.getGameFields());
+            int computerStep = getComputerStep(newGame);
 
-            if (computerStep != -1){
-                newGame.setAGameField(computerStep, "X");
-            } else {
+            if (computerStep == -2){
+                redirectAttributes.addFlashAttribute("error", "Server problem, please, try later.");
+            } else if (computerStep == -1){
                 logger.error("DATA REQUEST FAILED. READ AI LOG MESSAGE!");
+            } else {
+                newGame.setAGameField(computerStep, "X");
             }
+
         }
 
         return "redirect:/game";
@@ -62,7 +75,7 @@ public class GameController {
     @GetMapping(value = {"/game"})
     public String gameView(@ModelAttribute("player") Player player,
                            Model model) {
-        model.addAttribute("funfact", "&quot;Chuck Norris knows the last digit of pi.&quot;");
+        model.addAttribute("funfact", getQuote());
         model.addAttribute("comic_uri", "https://imgs.xkcd.com/comics/bad_code.png");
         return "game";
     }
@@ -89,17 +102,19 @@ public class GameController {
                     if (tictactoeGame.playerWins()){
                         redirectAttributes.addFlashAttribute("gameover", "Glorious victory!");
                     } else {
-                        int computerStep = restTemplate.getForObject("http://localhost:60001" + "/{gameStatus}", int.class, tictactoeGame.getGameFields());
+                        int computerStep = getComputerStep(tictactoeGame);
 
-                        if (computerStep != -1){
+                        if (computerStep == -2){
+                            redirectAttributes.addFlashAttribute("error", "Server problem, please, try later.");
+                        } else if (computerStep == -1){
+                            logger.error("DATA REQUEST FAILED. READ AI LOG MESSAGE!");
+                        } else {
                             tictactoeGame.setAGameField(computerStep, "X");
                             if (tictactoeGame.computerWins()){
                                 redirectAttributes.addFlashAttribute("gameover", "Defeat. Try again, we trust you.");
                             } else if (tictactoeGame.draw()){
                                 redirectAttributes.addFlashAttribute("gameover", "Draw. Keep breath and try again.");
                             }
-                        } else {
-                            logger.error("DATA REQUEST FAILED. READ AI LOG MESSAGE!");
                         }
                     }
                 }
@@ -109,4 +124,26 @@ public class GameController {
         return "redirect:/game";
     }
 
+    private int getComputerStep(TictactoeGame tictactoeGame){
+        int computerStep = -2;
+
+        try {
+            computerStep = restTemplate.getForObject("http://localhost:60001" + "/{gameStatus}", int.class, tictactoeGame.getGameFields());
+        } catch (Exception e){
+            logger.error("AI SERVER IS NOT AVAILABLE: " + e.getMessage());
+        }
+
+        return computerStep;
+    }
+
+    private String getQuote(){
+        try {
+            String quote = restTemplate.getForObject("http://localhost:60003" + "/", String.class);
+            return quote;
+        } catch (Exception e){
+            logger.error("FUNFACT SERVER IS NOT AVAILABLE: " + e.getMessage());
+        }
+
+        return "&quot;Chuck Norris knows the last digit of pi.&quot;";
+    }
 }

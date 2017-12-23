@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class APIReader {
+public class AiApiReader {
 
     private static final String tttApiPath = "http://tttapi.herokuapp.com/api/v1/";
     private static final String computerSign = "X";

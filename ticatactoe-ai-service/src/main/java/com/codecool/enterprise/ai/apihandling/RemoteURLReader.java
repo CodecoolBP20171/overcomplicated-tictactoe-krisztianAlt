@@ -11,6 +11,7 @@ import java.net.URL;
 public class RemoteURLReader {
 
     public String readFromUrl(String endpoint) throws IOException {
+        System.setProperty("http.agent", "Chrome");
         URL url = new URL(endpoint);
         String line;
         String result = "";

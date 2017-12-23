@@ -12,9 +12,9 @@ public class OvercomplicatedTicatactoeApplication {
 		SpringApplication.run(OvercomplicatedTicatactoeApplication.class, args);
 	}
 
-
     @Bean
     RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
 }
