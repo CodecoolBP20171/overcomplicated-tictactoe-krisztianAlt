@@ -23,12 +23,7 @@ public class GameController {
     public Player getPlayer() {
         return new Player();
     }
-
-    @ModelAttribute("game")
-    public TictactoeGame getGame() {
-        return new TictactoeGame();
-    }
-
+    
     @ModelAttribute("avatar_uri")
     public String getAvatarUri() {
         return "https://robohash.org/codecool";
@@ -44,7 +39,27 @@ public class GameController {
         return "redirect:/game";
     }
 
-    @GetMapping(value = "/game")
+    @GetMapping(value = {"/game/{whoStart}"})
+    public String gameStart(@ModelAttribute("player") Player player,
+                            @PathVariable("whoStart") String whoStart,
+                            RedirectAttributes redirectAttributes) {
+        TictactoeGame newGame = new TictactoeGame();
+        redirectAttributes.addFlashAttribute("game", newGame);
+
+        if (whoStart.equals("comp")){
+            int computerStep = restTemplate.getForObject("http://localhost:60001" + "/{gameStatus}", int.class, newGame.getGameFields());
+
+            if (computerStep != -1){
+                newGame.setAGameField(computerStep, "X");
+            } else {
+                logger.error("DATA REQUEST FAILED. READ AI LOG MESSAGE!");
+            }
+        }
+
+        return "redirect:/game";
+    }
+
+    @GetMapping(value = {"/game"})
     public String gameView(@ModelAttribute("player") Player player,
                            Model model) {
         model.addAttribute("funfact", "&quot;Chuck Norris knows the last digit of pi.&quot;");
@@ -58,14 +73,13 @@ public class GameController {
                            @ModelAttribute("game") TictactoeGame tictactoeGame,
                            RedirectAttributes redirectAttributes) {
         System.out.println("Player moved " + move);
-
         if (tictactoeGame.isGameClosed()){
-            redirectAttributes.addFlashAttribute("gameover", "Game over, you cannot select another field, please, start new game.");
+            redirectAttributes.addFlashAttribute("gameover", "Game over, you cannot select another field. Please, go back to main page and start a new game.");
         } else {
             boolean fieldIsReserved = tictactoeGame.checkFieldIsEmpty(move);
 
             if (fieldIsReserved){
-                redirectAttributes.addFlashAttribute("error", "Field is 0reserved, please, click another one!");
+                redirectAttributes.addFlashAttribute("error", "Field is reserved, please, click another one!");
             } else {
                 tictactoeGame.setAGameField(move, "O");
 
@@ -94,6 +108,5 @@ public class GameController {
 
         return "redirect:/game";
     }
-
 
 }

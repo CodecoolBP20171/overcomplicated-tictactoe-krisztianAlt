@@ -43,11 +43,6 @@
             </div>
         </div>
 
-        <!--<div id="error-messages" class="alert alert-danger" th:if="${error != null}">
-            <p th:text="${error}"></p>
-        </div>-->
-
-
         <div class="alert alert-danger alert-dismissable fade in" th:if="${error != null}">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <p th:text="${error}"></p>
@@ -141,6 +136,13 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-xs-9">
+                <a th:href="@{'~/'}" class="btn btn-default">Back to Main Page</a>
+            </div>
+        </div>
+
     </div>
     <footer>
         <div class="container">
