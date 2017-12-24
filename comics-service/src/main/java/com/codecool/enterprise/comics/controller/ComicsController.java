@@ -17,15 +17,15 @@ public class ComicsController {
 
     private org.slf4j.Logger logger = LoggerFactory.getLogger(ComicsController.class);
 
-    Random randomGenerator = new Random();
-    int minComicsNumber = 1;
-    int maxComicsNumber = 1929;
+    private Random randomGenerator = new Random();
+    private static final int MIN_COMICS_NUMBER = 1;
+    private static final int MAX_COMICS_NUMBER = 1929;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getDataFromComicsApi() {
 
         try {
-            int comicsNumber = randomGenerator.nextInt(maxComicsNumber - minComicsNumber + 1) + minComicsNumber;
+            int comicsNumber = randomGenerator.nextInt(MAX_COMICS_NUMBER - MIN_COMICS_NUMBER + 1) + MIN_COMICS_NUMBER;
             String uri = comicsApiReader.getDataFromApi(comicsNumber);
             logger.info("Data request from API succeeded. The URI: " + uri);
             return uri;
