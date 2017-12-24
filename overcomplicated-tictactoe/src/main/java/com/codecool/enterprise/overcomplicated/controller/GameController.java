@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.net.ConnectException;
-
 @Controller
 @SessionAttributes({"player", "game"})
 public class GameController {
