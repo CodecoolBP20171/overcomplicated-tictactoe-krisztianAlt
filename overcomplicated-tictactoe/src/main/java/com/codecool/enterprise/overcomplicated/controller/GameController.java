@@ -44,6 +44,11 @@ public class GameController {
         return "welcome";
     }
 
+    @PostMapping(value="/changeplayerusername/welcome")
+    public String changPlayerUserNameOnWelcomePage(@ModelAttribute Player player) {
+        return "redirect:/";
+    }
+
     @PostMapping(value="/changeplayerusername")
     public String changPlayerUserName(@ModelAttribute Player player) {
         return "redirect:/game";
@@ -76,9 +81,10 @@ public class GameController {
     public String gameView(@ModelAttribute("player") Player player,
                            Model model) {
         model.addAttribute("funfact", getQuote());
-        model.addAttribute("comic_uri", "https://imgs.xkcd.com/comics/bad_code.png");
+        model.addAttribute("comic_uri", getComicUri());
         return "game";
     }
+
 
     @GetMapping(value = "/game-move")
     public String gameMove(@ModelAttribute("player") Player player,
@@ -145,5 +151,16 @@ public class GameController {
         }
 
         return "&quot;Chuck Norris knows the last digit of pi.&quot;";
+    }
+
+    private String getComicUri() {
+        try {
+            String uri = restTemplate.getForObject("http://localhost:60004", String.class);
+            return uri;
+        } catch (Exception e){
+            logger.error("COMICS SERVER IS NOT AVAILABLE: " + e.getMessage());
+        }
+
+        return "https://imgs.xkcd.com/comics/bad_code.png";
     }
 }

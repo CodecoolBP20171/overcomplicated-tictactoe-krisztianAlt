@@ -31,7 +31,7 @@
                         <h4 class="modal-title">Change your name here:</h4>
                     </div>
                     <div class="modal-body">
-                        <form action="#" th:action="@{/changeplayerusername}" th:object="${player}" method="post">
+                        <form action="#" th:action="@{/changeplayerusername/welcome}" th:object="${player}" method="post">
                             <div class="form-group">
                                 <label for="newname">Your new name:</label>
                                 <input type="text" th:field="*{userName}" id="newname" class="form-control input-sm"/>

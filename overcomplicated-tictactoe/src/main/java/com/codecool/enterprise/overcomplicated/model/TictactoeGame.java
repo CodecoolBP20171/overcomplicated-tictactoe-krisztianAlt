@@ -13,11 +13,7 @@ public class TictactoeGame {
     public boolean isGameClosed() {
         return gameClosed;
     }
-
-    public void setGameClosed(boolean gameClosed) {
-        this.gameClosed = gameClosed;
-    }
-
+    
     public void setAGameField(int index, String playerSign) {
         gameFields = gameFields.substring(0, index) +
                     playerSign +
